@@ -7,6 +7,55 @@
   <title>Weather App</title>
 </head>
 <body>
-  hello
+  <header>
+    <h1>Weather Today </h1>
+    <i class="fas fa-sun"></i>
+  </header>
+  <form id="search-form">
+    <label for="city-input">Enter city:</label>
+    <input type="text" id="city-input" name="city" required>
+    <button type="submit">Search</button>
+  </form>
+  <div id="weather">
+    <div id="weather-icon"><i class="fas fa-sun"></i></div>
+    <div id="temperature">75°</div>
+    <div id="description">Sunny</div>
+    <div id="forecast">
+      <div class="forecast-item">
+        <div class="forecast-icon"><i class="fas fa-sun"></i></div>
+        <div class="forecast-day">Monday</div>
+        <div class="forecast-high">78°</div>
+        <div class="forecast-low">56°</div>
+      </div>
+      <div class="forecast-item">
+        <div class="forecast-icon"><i class="fas fa-cloud"></i></div>
+        <div class="forecast-day">Tuesday</div>
+        <div class="forecast-high">72°</div>
+        <div class="forecast-low">52°</div>
+      </div>
+      <div class="forecast-item">
+        <div class="forecast-icon"><i class="fas fa-cloud-rain"></i></div>
+        <div class="forecast-day">Wednesday</div>
+        <div class="forecast-high">65°</div>
+        <div class="forecast-low">48°</div>
+      </div>
+      <div class="forecast-item">
+        <div class="forecast-icon"><i class="fas fa-sun"></i></div>
+        <div class="forecast-day">Thursday</div>
+        <div class="forecast-high">80°</div>
+        <div class="forecast-low">60°</div>
+      </div>
+      <div class="forecast-item">
+        <div class="forecast-icon"><i class="fas fa-cloud"></i></div>
+        <div class="forecast-day">Friday</div>
+        <div class="forecast-high">72°</div>
+        <div class="forecast-low">55°</div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p>Designed and coded by Greta Rakauskaite &copy 2023
+  </footer>
 </body>
+<script src="https://kit.fontawesome.com/0c7872620e.js" crossorigin="anonymous"></script>
 </html>
