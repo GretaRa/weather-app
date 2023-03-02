@@ -52,6 +52,12 @@ h1 {
   margin-bottom: 20px;
 }
 
+#day{
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
 #temperature {
   font-size: 36px;
   font-weight: bold;
@@ -133,10 +139,6 @@ h1 {
 
 #search-form button:hover {
   background-color: #555;
-}
-
-i.fa-sun{
-  color: #ffc107;
 }
 
 /* footer styles */
