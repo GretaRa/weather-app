@@ -1,9 +1,20 @@
 import "./styles.css";
 import { format } from "date-fns";
 
-async function getForecast() {
+//const weatherContent = document.querySelector('#weather');
+const form = document.getElementById('search-form');
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  //weatherContent.innerHTML = '';
+  const city = document.getElementById('city-input').value;
+  getForecast(city);
+});
+
+getForecast('London');
+async function getForecast(city) {
 	let url =
-		"https://api.openweathermap.org/data/2.5/forecast?q=Arnhem&appid=55d93e41723e0921f44187affba5a537&units=metric";
+		`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=55d93e41723e0921f44187affba5a537&units=metric`;
 	let response = await fetch(url, { mode: "cors" });
 	let forecastData = await response.json();
 	let daily = [];
@@ -13,7 +24,7 @@ async function getForecast() {
 	}	
   
   const headerCity = document.getElementById("header-city");
-	headerCity.textContent = "Weather in" + " " + daily[0].name;
+	headerCity.textContent = `Weather in ${city}`;
 
   //Create todays weather display
   function displayTodayWeather() {
@@ -72,4 +83,4 @@ async function getForecast() {
   displayTodayWeather()
 	displayForecast();
 }
-getForecast();
+

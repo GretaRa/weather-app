@@ -5,6 +5,13 @@
   box-sizing: border-box;
 }
 
+:root{
+  --header-footer-color:#fff;
+  --footer-color: #183254;
+  --background-color: #d7edff;
+  --card-bg-color: #fff;
+}
+
 /* set default font size and color */
 body {
   font-size: 16px;
@@ -16,7 +23,7 @@ body {
 
 /* set background color and font family */
 body {
-  background-color: lightblue;
+  background-color: var(--background-color);
   font-family: Arial, sans-serif;
 }
 
@@ -26,9 +33,10 @@ header {
   justify-content: center;
   align-items: center;
   height: 60px;
-  background-color: white;
+  background-color: var(--header-footer-color);
   border-bottom: 1px solid #ccc;
   flex-shrink: 0;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 8%);
 }
 
 h1 {
@@ -82,7 +90,7 @@ h1 {
   align-items: center;
   margin: 20px;
   padding: 20px;
-  background-color: white;
+  background-color: var(--card-bg-color);
   border-radius: 5px;
   box-shadow: 0px 0px 5px #ccc;
 }
@@ -144,11 +152,11 @@ h1 {
 /* footer styles */
 footer {
   text-align: center;
-  font-size: 12px;
-  color: #888;
+  font-size: 14px;
+  color: #fffbfb;
   margin-top: 50px;
   padding: 10px;
-  background-color: white;
-  border-top: 1px solid #ccc;
+  background-color: var(--footer-color)  ;
+  border-top: 1px solid #e4e1e1;
   margin-top: auto;
 }
