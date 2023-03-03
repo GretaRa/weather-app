@@ -1,17 +1,21 @@
 import "./styles.css";
 import { format } from "date-fns";
 
-//const weatherContent = document.querySelector('#weather');
+
+getForecast('London');
+
+const forecast = document.querySelector('#forecast');
 const form = document.getElementById('search-form');
 
-form.addEventListener('submit', async (event) => {
+form.addEventListener('submit', (event) => {
   event.preventDefault();
-  //weatherContent.innerHTML = '';
-  const city = document.getElementById('city-input').value;
+  forecast.innerHTML = '';
+  let city = document.getElementById('city-input').value;
+	//Capitalize first letter and lowercase the rest of the string
+	city = city[0].toUpperCase() + city.slice(1).toLowerCase();
   getForecast(city);
 });
 
-getForecast('London');
 async function getForecast(city) {
 	let url =
 		`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=55d93e41723e0921f44187affba5a537&units=metric`;
