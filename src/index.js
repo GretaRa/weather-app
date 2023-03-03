@@ -9,7 +9,15 @@ function displayCityForecast() {
 
 	form.addEventListener("submit", (event) => {
 		event.preventDefault();
+
 		let city = document.getElementById("city-input").value;
+
+		const weatherContainer = document.getElementById("weather");
+		weatherContainer.style.display = "flex";
+
+		const errorContainer = document.querySelector(".errorContainer");
+		errorContainer.style.display = "none";
+
 		getCity(city);
 	});
 }
@@ -30,18 +38,26 @@ async function getForecast(city) {
 	try {
 		let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=55d93e41723e0921f44187affba5a537&units=metric`;
 		let response = await fetch(url, { mode: "cors" });
-		let forecastData = await response.json();
-		selectDaily(forecastData);
-	} catch (err) {
-		console.log(err);
-		// if (err.name === 404) {
-		// 	alert('Please enter a valid city name')
-		// 	return
-		// } else {
-		// 	throw err; // some error other than 404
-		// }
+		if (!response.ok) {
+			const weatherContainer = document.getElementById("weather");
+			weatherContainer.style.display = "none";
+
+			const errorContainer = document.querySelector(".errorContainer");
+			errorContainer.style.display = "block";
+
+			const errMsg = document.querySelector(".errorMsg");
+			errMsg.textContent = `No data found for '${city}'`;
+
+			throw new Error("Request failed due to wrong search input.");
+		} else {
+			let forecastData = await response.json();
+			selectDaily(forecastData);
+		}
+	} catch (error) {
+		console.log(error);
 	}
 }
+
 function selectDaily(forecastData) {
 	let daily = [];
 
