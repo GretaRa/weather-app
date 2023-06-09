@@ -11,6 +11,8 @@ function displayCityForecast() {
 		event.preventDefault();
 
 		let city = document.getElementById("city-input").value;
+		let cityInput = document.getElementById("city-input");
+		cityInput.value = "";
 
 		const weatherContainer = document.getElementById("weather");
 		weatherContainer.style.display = "flex";
@@ -52,6 +54,7 @@ async function getForecast(city) {
 		} else {
 			let forecastData = await response.json();
 			selectDaily(forecastData);
+			console.log(forecastData);
 		}
 	} catch (error) {
 		console.log(error);
@@ -83,6 +86,30 @@ function displayTodayWeather(daily) {
 	const weatherNowDesc = document.getElementById("description");
 	weatherNowDesc.textContent = daily[0].weather[0].main;
 }
+
+function getCurrentLocation() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition((position) => {
+			let lat = position.coords.latitude;
+			let lon = position.coords.longitude;
+			getCurrentWeather(lat, lon);
+		});
+	} else {
+		console.log("Geolocation is not supported by this browser.");
+	}
+}
+
+
+
+// const successCallback = (position) => {
+//   console.log(position);
+// };
+
+// const errorCallback = (error) => {
+//   console.log(error);
+// };
+
+// navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 
 //Create next 4 days weather display
 function displayForecast(daily) {
