@@ -170,6 +170,7 @@ footer {
 /* Error message */
 .errorContainer {
 	display: none;
+	text-align: center;
 	background-color: rgba(236, 14, 14, 0.432);
 	border: 2px solid rgb(180, 14, 14);
 	padding: 1rem 1rem;

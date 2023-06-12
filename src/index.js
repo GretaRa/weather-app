@@ -1,7 +1,7 @@
 import "./styles.css";
 import { format } from "date-fns";
 
-getCity("Amsterdam");
+getLocationName("Amsterdam");
 displayCityForecast();
 
 function displayCityForecast() {
@@ -10,9 +10,9 @@ function displayCityForecast() {
 	form.addEventListener("submit", (event) => {
 		event.preventDefault();
 
-		let city = document.getElementById("city-input").value;
-		let cityInput = document.getElementById("city-input");
-		cityInput.value = "";
+		let cityInput = document.getElementById("city-input").value;
+		let cityInputField = document.getElementById("city-input");
+		cityInputField.value = "";
 
 		const weatherContainer = document.getElementById("weather");
 		weatherContainer.style.display = "flex";
@@ -20,25 +20,48 @@ function displayCityForecast() {
 		const errorContainer = document.querySelector(".errorContainer");
 		errorContainer.style.display = "none";
 
-		getCity(city);
+		getLocationName(cityInput);
 	});
 }
 
-function getCity(city) {
+function getCity(city, country) {
 	const forecast = document.querySelector("#forecast");
 	forecast.innerHTML = "";
-	//Capitalize first letter and lowercase the rest of the string
-	city = city[0].toUpperCase() + city.slice(1).toLowerCase();
 	//Set city name in the header
 	const headerCity = document.getElementById("header-city");
-	headerCity.textContent = `Weather in ${city}`;
-
-	getForecast(city);
+	headerCity.textContent = `Weather in ${city}, ${country}`;
+	
 }
 
-async function getForecast(city) {
+async function getLocationName(cityInput) {
 	try {
-		let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=55d93e41723e0921f44187affba5a537&units=metric`;
+		let url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=3&appid=55d93e41723e0921f44187affba5a537`;
+		let response = await fetch(url, { mode: "cors" });
+		let locationData = await response.json();
+		let lat = locationData[0].lat;
+		let lon = locationData[0].lon;
+		console.log(locationData,"locationData");
+		let city = locationData[0].name;
+		let country = locationData[0].country;
+		getCity(city, country);
+		getForecast(lat, lon);
+	} catch (error) {
+			const weatherContainer = document.getElementById("weather");
+			weatherContainer.style.display = "none";
+
+			const errorContainer = document.querySelector(".errorContainer");
+			errorContainer.style.display = "block";
+
+			const errMsg = document.querySelector(".errorMsg");
+			errMsg.textContent = `No data found`;
+
+			throw new Error("Request failed due to wrong search input.");
+	}
+}
+
+async function getForecast(lat,lon) {
+	try {
+		let url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=55d93e41723e0921f44187affba5a537&units=metric`;
 		let response = await fetch(url, { mode: "cors" });
 		if (!response.ok) {
 			const weatherContainer = document.getElementById("weather");
@@ -48,13 +71,13 @@ async function getForecast(city) {
 			errorContainer.style.display = "block";
 
 			const errMsg = document.querySelector(".errorMsg");
-			errMsg.textContent = `No data found for '${city}'`;
+			errMsg.textContent = `No data found`;
 
 			throw new Error("Request failed due to wrong search input.");
 		} else {
 			let forecastData = await response.json();
+			console.log(forecastData,"forecastData");
 			selectDaily(forecastData);
-			console.log(forecastData);
 		}
 	} catch (error) {
 		console.log(error);
@@ -87,17 +110,17 @@ function displayTodayWeather(daily) {
 	weatherNowDesc.textContent = daily[0].weather[0].main;
 }
 
-function getCurrentLocation() {
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition((position) => {
-			let lat = position.coords.latitude;
-			let lon = position.coords.longitude;
-			getCurrentWeather(lat, lon);
-		});
-	} else {
-		console.log("Geolocation is not supported by this browser.");
-	}
-}
+// function getCurrentLocation() {
+// 	if (navigator.geolocation) {
+// 		navigator.geolocation.getCurrentPosition((position) => {
+// 			let lat = position.coords.latitude;
+// 			let lon = position.coords.longitude;
+// 			getCurrentWeather(lat, lon);
+// 		});
+// 	} else {
+// 		console.log("Geolocation is not supported by this browser.");
+// 	}
+// }
 
 
 
