@@ -41,9 +41,6 @@ async function getLocationName(cityInput) {
 		let lat = locationData[0].lat;
 		let lon = locationData[0].lon;
 		console.log(locationData,"locationData");
-		let city = locationData[0].name;
-		let country = locationData[0].country;
-		getCity(city, country);
 		getForecast(lat, lon);
 	} catch (error) {
 			const weatherContainer = document.getElementById("weather");
@@ -76,7 +73,10 @@ async function getForecast(lat,lon) {
 			throw new Error("Request failed due to wrong search input.");
 		} else {
 			let forecastData = await response.json();
-			console.log(forecastData,"forecastData");
+			let city = forecastData.city.name;
+			let country = forecastData.city.country;
+			getCity(city, country);
+			console.log(forecastData, "forecastData");
 			selectDaily(forecastData);
 		}
 	} catch (error) {
@@ -110,29 +110,21 @@ function displayTodayWeather(daily) {
 	weatherNowDesc.textContent = daily[0].weather[0].main;
 }
 
-// function getCurrentLocation() {
-// 	if (navigator.geolocation) {
-// 		navigator.geolocation.getCurrentPosition((position) => {
-// 			let lat = position.coords.latitude;
-// 			let lon = position.coords.longitude;
-// 			getCurrentWeather(lat, lon);
-// 		});
-// 	} else {
-// 		console.log("Geolocation is not supported by this browser.");
-// 	}
-// }
+const currentLocationBtn = document.getElementById("current-location-btn");
+currentLocationBtn.addEventListener("click", getCurrentLocation);
 
-
-
-// const successCallback = (position) => {
-//   console.log(position);
-// };
-
-// const errorCallback = (error) => {
-//   console.log(error);
-// };
-
-// navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+function getCurrentLocation() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition((position) => {
+			let lat = position.coords.latitude;
+			let lon = position.coords.longitude;
+			console.log(position);
+			getForecast(lat, lon);
+		});
+	} else {
+		console.log("Geolocation is not supported by this browser.");
+	}
+}
 
 //Create next 4 days weather display
 function displayForecast(daily) {
