@@ -2,9 +2,9 @@ import "./styles.css";
 import { format } from "date-fns";
 
 getLocationName("Amsterdam");
-displayCityForecast();
+getSearchInput();
 
-function displayCityForecast() {
+function getSearchInput() {
 	const form = document.getElementById("search-form");
 
 	form.addEventListener("submit", (event) => {
@@ -13,12 +13,6 @@ function displayCityForecast() {
 		let cityInput = document.getElementById("city-input").value;
 		let cityInputField = document.getElementById("city-input");
 		cityInputField.value = "";
-
-		const weatherContainer = document.getElementById("weather");
-		weatherContainer.style.display = "flex";
-
-		const errorContainer = document.querySelector(".errorContainer");
-		errorContainer.style.display = "none";
 
 		getLocationName(cityInput);
 	});
@@ -33,6 +27,14 @@ function getCity(city, country) {
 	
 }
 
+function resetDisplay (){
+	const weatherContainer = document.getElementById("weather");
+	weatherContainer.style.display = "flex";
+
+	const errorContainer = document.querySelector(".errorContainer");
+	errorContainer.style.display = "none";
+}
+
 async function getLocationName(cityInput) {
 	try {
 		let url = `https://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=3&appid=55d93e41723e0921f44187affba5a537`;
@@ -41,6 +43,7 @@ async function getLocationName(cityInput) {
 		let lat = locationData[0].lat;
 		let lon = locationData[0].lon;
 		getForecast(lat, lon);
+
 	} catch (error) {
 			const weatherContainer = document.getElementById("weather");
 			weatherContainer.style.display = "none";
@@ -76,6 +79,8 @@ async function getForecast(lat,lon) {
 			let country = forecastData.city.country;
 			getCity(city, country);
 			selectDaily(forecastData);
+
+			resetDisplay();
 		}
 	} catch (error) {
 		console.log(error);
