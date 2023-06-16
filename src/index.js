@@ -35,7 +35,7 @@ function getCity(city, country) {
 
 async function getLocationName(cityInput) {
 	try {
-		let url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=3&appid=55d93e41723e0921f44187affba5a537`;
+		let url = `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=3&appid=55d93e41723e0921f44187affba5a537`;
 		let response = await fetch(url, { mode: "cors" });
 		let locationData = await response.json();
 		let lat = locationData[0].lat;
@@ -58,7 +58,7 @@ async function getLocationName(cityInput) {
 
 async function getForecast(lat,lon) {
 	try {
-		let url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=55d93e41723e0921f44187affba5a537&units=metric`;
+		let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=55d93e41723e0921f44187affba5a537&units=metric`;
 		let response = await fetch(url, { mode: "cors" });
 		if (!response.ok) {
 			const weatherContainer = document.getElementById("weather");
