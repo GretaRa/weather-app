@@ -35,12 +35,11 @@ function getCity(city, country) {
 
 async function getLocationName(cityInput) {
 	try {
-		let url = `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=3&appid=55d93e41723e0921f44187affba5a537`;
+		let url = `https://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=3&appid=55d93e41723e0921f44187affba5a537`;
 		let response = await fetch(url, { mode: "cors" });
 		let locationData = await response.json();
 		let lat = locationData[0].lat;
 		let lon = locationData[0].lon;
-		console.log(locationData,"locationData");
 		getForecast(lat, lon);
 	} catch (error) {
 			const weatherContainer = document.getElementById("weather");
@@ -76,7 +75,6 @@ async function getForecast(lat,lon) {
 			let city = forecastData.city.name;
 			let country = forecastData.city.country;
 			getCity(city, country);
-			console.log(forecastData, "forecastData");
 			selectDaily(forecastData);
 		}
 	} catch (error) {
@@ -98,7 +96,7 @@ function selectDaily(forecastData) {
 function displayTodayWeather(daily) {
 	const weatherNowIcon = document.getElementById("weather-icon");
 	weatherNowIcon.src =
-		"http://openweathermap.org/img/wn/" + daily[0].weather[0].icon + "@2x.png";
+		"https://openweathermap.org/img/wn/" + daily[0].weather[0].icon + "@2x.png";
 
 	const weatherDay = document.querySelector("#day");
 	weatherDay.textContent = format(new Date(daily[0].dt_txt), "eeee");
@@ -118,7 +116,6 @@ function getCurrentLocation() {
 		navigator.geolocation.getCurrentPosition((position) => {
 			let lat = position.coords.latitude;
 			let lon = position.coords.longitude;
-			console.log(position);
 			getForecast(lat, lon);
 		});
 	} else {
@@ -137,7 +134,7 @@ function displayForecast(daily) {
 		forecastIcon.setAttribute("id", "weather-icon");
 		forecastIcon.setAttribute(
 			"src",
-			"http://openweathermap.org/img/wn/" + daily[d].weather[0].icon + "@2x.png"
+			"https://openweathermap.org/img/wn/" + daily[d].weather[0].icon + "@2x.png"
 		);
 
 		const forecastDay = document.createElement("div");
