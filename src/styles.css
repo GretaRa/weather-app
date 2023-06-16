@@ -19,7 +19,7 @@ body {
 	color: #333;
 
 	background-color: var(--background-color);
-	font-family: Arial, sans-serif;
+	font-family: 'Roboto', Arial, sans-serif;
 
 	display: flex;
 	flex-direction: column;
@@ -158,7 +158,7 @@ h1 {
 /* footer styles */
 footer {
 	text-align: center;
-	font-size: 14px;
+	font-size: 16px;
 	color: #fffbfb;
 	margin-top: 50px;
 	padding: 10px;
