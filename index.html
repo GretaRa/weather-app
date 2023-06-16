@@ -4,26 +4,33 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 		<title>Weather App</title>
 	<script defer src="runtime.bundle.js"></script><script defer src="main.bundle.js"></script></head>
 	<body>
 		<header>
 			<h1 id="header-city"></h1>
+			<form id="search-form">
+				<input type="text" id="city-input" name="city" placeholder="Search" required />
+				<button type="submit"><i class="fa fa-search"></i></button>
+				<button type="button" id="current-location-btn"><i class="fa fa-map-marker"></i></button>
+			</form>
 		</header>
 		<div class="content">
 			<div class="errorContainer">
 				<p class="errorMsg"></p>
 			</div>
-			<form id="search-form">
-				<label for="city-input">Enter city:</label>
-				<input type="text" id="city-input" name="city" required />
-				<button type="submit">Search</button>
-			</form>
+			
 			<div id="weather">
-				<div><img id="weather-icon" src="#" /></div>
-				<div id="day"></div>
-				<div id="temperature"></div>
-				<div id="description"></div>
+				<div id="today">
+					<div><img id="weather-icon" src="#" /></div>
+					<div id="day"></div>
+					<div id="temperature"></div>
+					<div id="description"></div>
+				</div>
 				<div id="forecast"></div>
 			</div>
 		</div>
