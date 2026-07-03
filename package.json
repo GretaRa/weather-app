@@ -30,6 +30,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
+    "@meteocons/svg": "^0.1.0",
     "date-fns": "^2.29.3"
   }
 }

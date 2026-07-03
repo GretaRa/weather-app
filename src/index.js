@@ -1,5 +1,44 @@
 import "./styles.css";
 import { format } from "date-fns";
+import clearDay from "@meteocons/svg/fill/clear-day.svg";
+import clearNight from "@meteocons/svg/fill/clear-night.svg";
+import partlyCloudyDay from "@meteocons/svg/fill/partly-cloudy-day.svg";
+import partlyCloudyNight from "@meteocons/svg/fill/partly-cloudy-night.svg";
+import cloudy from "@meteocons/svg/fill/cloudy.svg";
+import overcast from "@meteocons/svg/fill/overcast.svg";
+import drizzle from "@meteocons/svg/fill/drizzle.svg";
+import rainDay from "@meteocons/svg/fill/partly-cloudy-day-rain.svg";
+import rainNight from "@meteocons/svg/fill/partly-cloudy-night-rain.svg";
+import thunderDay from "@meteocons/svg/fill/thunderstorms-day.svg";
+import thunderNight from "@meteocons/svg/fill/thunderstorms-night.svg";
+import snow from "@meteocons/svg/fill/snow.svg";
+import fog from "@meteocons/svg/fill/fog.svg";
+import notAvailable from "@meteocons/svg/fill/not-available.svg";
+
+const iconMap = {
+	"01d": clearDay,
+	"01n": clearNight,
+	"02d": partlyCloudyDay,
+	"02n": partlyCloudyNight,
+	"03d": cloudy,
+	"03n": cloudy,
+	"04d": overcast,
+	"04n": overcast,
+	"09d": drizzle,
+	"09n": drizzle,
+	"10d": rainDay,
+	"10n": rainNight,
+	"11d": thunderDay,
+	"11n": thunderNight,
+	"13d": snow,
+	"13n": snow,
+	"50d": fog,
+	"50n": fog,
+};
+
+function getIconSrc(owmCode) {
+	return iconMap[owmCode] || notAvailable;
+}
 
 getLocationName("Amsterdam");
 getSearchInput();
@@ -24,10 +63,9 @@ function getCity(city, country) {
 	//Set city name in the header
 	const headerCity = document.getElementById("header-city");
 	headerCity.textContent = `Weather in ${city}, ${country}`;
-	
 }
 
-function resetDisplay (){
+function resetDisplay() {
 	const weatherContainer = document.getElementById("weather");
 	weatherContainer.style.display = "flex";
 
@@ -43,22 +81,21 @@ async function getLocationName(cityInput) {
 		let lat = locationData[0].lat;
 		let lon = locationData[0].lon;
 		getForecast(lat, lon);
-
 	} catch (error) {
-			const weatherContainer = document.getElementById("weather");
-			weatherContainer.style.display = "none";
+		const weatherContainer = document.getElementById("weather");
+		weatherContainer.style.display = "none";
 
-			const errorContainer = document.querySelector(".errorContainer");
-			errorContainer.style.display = "block";
+		const errorContainer = document.querySelector(".errorContainer");
+		errorContainer.style.display = "block";
 
-			const errMsg = document.querySelector(".errorMsg");
-			errMsg.textContent = `No data found`;
+		const errMsg = document.querySelector(".errorMsg");
+		errMsg.textContent = `No data found`;
 
-			throw new Error("Request failed due to wrong search input.");
+		throw new Error("Request failed due to wrong search input.");
 	}
 }
 
-async function getForecast(lat,lon) {
+async function getForecast(lat, lon) {
 	try {
 		let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=55d93e41723e0921f44187affba5a537&units=metric`;
 		let response = await fetch(url, { mode: "cors" });
@@ -79,7 +116,6 @@ async function getForecast(lat,lon) {
 			let country = forecastData.city.country;
 			getCity(city, country);
 			selectDaily(forecastData);
-
 			resetDisplay();
 		}
 	} catch (error) {
@@ -100,8 +136,7 @@ function selectDaily(forecastData) {
 //Create todays weather display
 function displayTodayWeather(daily) {
 	const weatherNowIcon = document.getElementById("weather-icon");
-	weatherNowIcon.src =
-		"https://openweathermap.org/img/wn/" + daily[0].weather[0].icon + "@2x.png";
+	weatherNowIcon.src = getIconSrc(daily[0].weather[0].icon);
 
 	const weatherDay = document.querySelector("#day");
 	weatherDay.textContent = format(new Date(daily[0].dt_txt), "eeee");
@@ -137,10 +172,8 @@ function displayForecast(daily) {
 		const iconDiv = document.createElement("div");
 		const forecastIcon = document.createElement("img");
 		forecastIcon.setAttribute("id", "weather-icon");
-		forecastIcon.setAttribute(
-			"src",
-			"https://openweathermap.org/img/wn/" + daily[d].weather[0].icon + "@2x.png"
-		);
+		forecastIcon.setAttribute("src", getIconSrc(daily[d].weather[0].icon));
+		forecastIcon.setAttribute("aria-hidden", "true");
 
 		const forecastDay = document.createElement("div");
 		forecastDay.classList.add("forecast-day");
