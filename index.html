@@ -1,43 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+			rel="stylesheet"
+		/>
 		<title>Weather App</title>
 	<script defer src="runtime.bundle.js"></script><script defer src="main.bundle.js"></script></head>
 	<body>
 		<header>
-			<h1 id="header-city"></h1>
-			<form id="search-form">
-				<input type="text" id="city-input" name="city" placeholder="Search" required />
-				<button type="submit"><i class="fa fa-search"></i></button>
-				<button type="button" id="current-location-btn"><i class="fa fa-map-marker"></i></button>
-			</form>
+			<div class="header-inner">
+				<h1 id="header-city"></h1>
+				<form id="search-form">
+					<div class="search-wrapper">
+						<label for="city-input" class="sr-only">Search city</label>
+						<input
+							type="text"
+							id="city-input"
+							name="city"
+							placeholder="Search city..."
+							required
+						/>
+						<button class="btn-search" type="submit" aria-label="Submit search">
+							<i class="fa fa-search" aria-hidden="true"></i>
+						</button>
+					</div>
+					<button class="btn-location" type="button" id="current-location-btn" aria-label="Use my location">
+						<i class="fa fa-map-marker" aria-hidden="true"></i>
+					</button>
+				</form>
+			</div>
 		</header>
 		<div class="content">
 			<div class="errorContainer">
 				<p class="errorMsg"></p>
 			</div>
-			
 			<div id="weather">
-				<div id="today">
-					<div><img id="weather-icon" src="#" /></div>
+				<div id="today" aria-label="Today's weather">
+					<div aria-hidden="true"><img id="weather-icon" src="#" /></div>
 					<div id="day"></div>
 					<div id="temperature"></div>
 					<div id="description"></div>
 				</div>
-				<div id="forecast"></div>
+				<div aria-label="4-day forecast" id="forecast"></div>
 			</div>
 		</div>
 		<footer>
 			<p>
-				Designed and coded by Greta Rakauskaite &copy 2023 *Data from
-				OpenWeather
+				Designed and coded by Greta Rakauskaite
+				<span aria-hidden="true">·</span>
+				<a
+					href="https://openweathermap.org"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					*Data from OpenWeather
+				</a>
 			</p>
 		</footer>
 	</body>
